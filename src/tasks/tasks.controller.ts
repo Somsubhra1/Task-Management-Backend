@@ -1,5 +1,6 @@
+import { createTaskDto } from './dto/create-task.dto';
 import { Task } from './tasks.model';
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
@@ -11,15 +12,21 @@ export class TasksController {
         return this.tasksService.getAllTasks();
     }
 
+    @Get('/:id')
+    getTaskById(@Param("id") id: String): Task {
+        return this.tasksService.getTaskById(id);
+    }
+
     @Post()
     // createTask(@Body() body) {
     //     // @Body() decorator is used to get the values from the request body and store in body variable
     //     console.log(body);
     // }
     createTask(
-        @Body('title') title: String,
-        @Body('description') description: String,
+        // @Body('title') title: String,
+        // @Body('description') description: String,
+        @Body() createTaskDto: createTaskDto,
     ): Task {
-        return this.tasksService.createTask(title, description);
+        return this.tasksService.createTask(createTaskDto);
     }
 }

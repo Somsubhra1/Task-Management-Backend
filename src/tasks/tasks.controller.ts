@@ -21,7 +21,7 @@ export class TasksController {
     constructor(private tasksService: TasksService) {}
 
     @Get()
-    getTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
+    getTasks(@Query(ValidationPipe) filterDto: GetTasksFilterDto): Task[] {
         if (Object.keys(filterDto).length) {
             return this.tasksService.getTaskWithFilters(filterDto);
         } else {
@@ -39,7 +39,7 @@ export class TasksController {
     //     // @Body() decorator is used to get the values from the request body and store in body variable
     //     console.log(body);
     // }
-    @UsePipes(ValidationPipe)
+    @UsePipes(ValidationPipe) // can use @Body(ValidationPipe) also
     createTask(
         // @Body('title') title: String,
         // @Body('description') description: String,

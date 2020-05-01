@@ -1,4 +1,4 @@
-import { createTaskDto } from './dto/create-task.dto';
+import { CreateTaskDto } from './dto/create-task.dto';
 import { Task, TaskStatus } from './tasks.model';
 import {
     Controller,
@@ -9,6 +9,8 @@ import {
     Delete,
     Patch,
     Query,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
@@ -36,10 +38,11 @@ export class TasksController {
     //     // @Body() decorator is used to get the values from the request body and store in body variable
     //     console.log(body);
     // }
+    @UsePipes(ValidationPipe)
     createTask(
         // @Body('title') title: String,
         // @Body('description') description: String,
-        @Body() createTaskDto: createTaskDto,
+        @Body() createTaskDto: CreateTaskDto,
     ): Task {
         return this.tasksService.createTask(createTaskDto);
     }
